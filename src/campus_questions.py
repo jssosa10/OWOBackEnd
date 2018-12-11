@@ -1,7 +1,7 @@
 import datetime
 
 buckets = 20
-date_template = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+date_template = "yyyy-MM-ddTHH:mm:ssZ"
 
 def resolve_question(question_number, campus_data):
     for entry in campus_data:
