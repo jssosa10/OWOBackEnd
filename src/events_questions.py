@@ -18,7 +18,7 @@ def question4(events_data):
 def question5(events_data):
     pass
 questions = [question1,question2,question3,question4,question5]
-date_template = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+date_template = "yyyy-MM-ddTHH:mm:ssZ"
 
 def get_datetime(date):
-    return datetime.datetime.strptime(date_template, date)
+    return datetime.datetime.strptime(date,date_template)

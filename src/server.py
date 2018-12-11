@@ -2,6 +2,7 @@ import os
 import json
 import ConfigParser
 import campus_questions
+import events_questions
 from flaskext.mysql import MySQL
 from flask import Flask, render_template, request, redirect
 from flask_cors import CORS, cross_origin
@@ -146,7 +147,11 @@ def get_eventos():
     except:
         conn.close()
         return []
-
+@app.route('/events/<question_number>', methods=['GET'])
+def get_events_questions(question_number):
+    campus_data = get_campus()
+    data = events_questions.resolve_question(int(question_number)-1, campus_data)
+    return json.dumps({'status':'success', 'data': data})
 ## post de interaccion
 @app.route('/interaccion', methods=['POST'])
 def post_interaccion():
