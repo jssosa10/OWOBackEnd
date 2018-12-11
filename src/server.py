@@ -142,7 +142,7 @@ def get_eventos():
         cursor.execute('select * from EVENTOS')
         lista = [{'id':campus_id,'email':email,'date':date,'start_date':start_date,'end_date':end_date, 'type': tipo, 'recomended': recomended} for (campus_id, email, start_date,end_date, tipo, recomended, date) in cursor]
         conn.close()
-        retrun lista
+        return lista
     except:
         conn.close()
         return []
