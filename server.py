@@ -66,18 +66,23 @@ def post_campus():
     return json.dumps({'status':'succes'}), 200
 
 ## get del campus
-@app.route('/campus',methods=['GET'])
 def get_campus():
     conn = mysql.connect()
-    cursor =conn.cursor()
+    cursor = conn.cursor()
     try:
         cursor.execute('select * from CAMPUS')
         lista = [{'id':campus_id,'email':email,'date':date} for (campus_id, email, date) in cursor]
         conn.close()
-        return json.dumps({'status':'succes','elementos':lista}),200
+        return lista
     except:
-        conn.close()
-        return json.dumps({'status':'error'}), 505
+        return []
+
+# question 1
+@app.route('/campus/<question_number>', methods=['GET'])
+def get_campus_questions(question_number):
+    campus_data = get_campus()
+    data = resolve_question(question_number, campus_data)
+    return json.dumps({'status':'success', 'data': data})
 
 ## post del sleep
 @app.route('/sleep', methods=['POST'])
