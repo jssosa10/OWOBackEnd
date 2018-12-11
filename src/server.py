@@ -149,8 +149,8 @@ def get_eventos():
         return []
 @app.route('/events/<question_number>', methods=['GET'])
 def get_events_questions(question_number):
-    campus_data = get_campus()
-    data = events_questions.resolve_question(int(question_number)-1, campus_data)
+    events_data = get_eventos()
+    data = events_questions.resolve_question(int(question_number)-1, events_data)
     return json.dumps({'status':'success', 'data': data})
 ## post de interaccion
 @app.route('/interaccion', methods=['POST'])
