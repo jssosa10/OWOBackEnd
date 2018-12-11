@@ -95,7 +95,10 @@ def post_sleep():
     conn = mysql.connect()
     cursor =conn.cursor()
     try:
-        cursor.execute('insert into SLEEP values(null, %s, %s, %s)', (mail, date,type))
+        if type=='start':
+            cursor.execute('insert into SLEEP values(null, %s, %s, null)', (mail, date))
+        else:
+            cursor.execute('update SLEEP set end_date="%s" where end_date is null and email="%s"',(date,mail))
         conn.commit()
     except:
         conn.rollback()
