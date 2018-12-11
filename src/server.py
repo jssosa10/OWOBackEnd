@@ -81,7 +81,7 @@ def get_campus():
 @app.route('/campus/<question_number>', methods=['GET'])
 def get_campus_questions(question_number):
     campus_data = get_campus()
-    data = campus_questions.resolve_question(question_number, campus_data)
+    data = campus_questions.resolve_question(int(question_number)-1, campus_data)
     return json.dumps({'status':'success', 'data': data})
 
 ## post del sleep
