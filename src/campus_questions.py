@@ -19,8 +19,8 @@ def question1(campus_data):
     all_average = []
     for dates in group_by_email.values():
         diff_dates = [dates[i] - dates[i - 1] for i in range(1, len(dates))]
-        average = sum(diff_dates, datetime.timedelta(0)) / float(len(diff_dates))
-        all_average.append(average)
+        average = sum(diff_dates, datetime.timedelta(0)) / len(diff_dates)
+        all_average.append(average.days)
     all_average.sort()
     # get time delta
     min_average = all_average[0]
