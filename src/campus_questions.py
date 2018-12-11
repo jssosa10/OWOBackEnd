@@ -28,6 +28,12 @@ def question1(campus_data):
     delta_average = max(1, (max_average - min_average) / buckets)
     # get time buckets
     time_buckets = [['', 0] for _ in range(buckets)]
+    i = 0
+    curr_time = 0
+    while i < buckets:
+        time_buckets[i][0] = '>= %d days' % curr_time
+        curr_time = int(curr_time + delta_average)
+        i += 1 
     # place info in time buckets
     i = 0
     curr_time = 0
@@ -36,7 +42,6 @@ def question1(campus_data):
             curr_time = int(curr_time + delta_average)
             i += 1
         i = min(i, len(time_buckets) - 1)
-        time_buckets[i][0] = str(curr_time)
         time_buckets[i][1] += 1
     return time_buckets
 
