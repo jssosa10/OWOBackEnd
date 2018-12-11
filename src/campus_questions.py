@@ -27,7 +27,7 @@ def question1(campus_data):
     max_average = all_average[-1]
     delta_average = max(1, (max_average - min_average) / buckets)
     # get time buckets
-    time_buckets = [0 for _ in range(buckets)]
+    time_buckets = [['', 0] for _ in range(buckets)]
     # place info in time buckets
     i = 0
     curr_time = 0
@@ -36,12 +36,13 @@ def question1(campus_data):
             curr_time = int(curr_time + delta_average)
             i += 1
         i = min(i, len(time_buckets) - 1)
-        time_buckets[i] += 1
+        time_buckets[i][0] = str(curr_time)
+        time_buckets[i][1] += 1
     return time_buckets
 
 def question2(campus_data):
     # count freqs
-    days = [0 for _ in range(366)]
+    days = [[str(i + 1), 0] for _ in range(366)]
     for entry in campus_data:
         day = entry['date'].timetuple().tm_yday - 1
         days[day] += 1
@@ -52,7 +53,8 @@ def question2(campus_data):
 
 def question3(campus_data):
     # count freqs
-    hours = [0 for _ in range(24)]
+    get_hour = lambda x : '%2d:00' % x
+    hours = [[get_hour(i), 0] for i in range(24)]
     for entry in campus_data:
         hour = entry['date'].hour
         hours[hour] += 1
@@ -60,7 +62,8 @@ def question3(campus_data):
 
 def question4(campus_data):
     # count freqs
-    week_days = [0 for _ in range(7)]
+    weekday_name = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    week_days = [[weekday_name[i], 0] for i in range(7)]
     for entry in campus_data:
         day = entry['date'].weekday()
         week_days[day] += 1
