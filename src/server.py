@@ -1,6 +1,7 @@
 import os
 import json
 import ConfigParser
+import campus_questions
 from flaskext.mysql import MySQL
 from flask import Flask, render_template, request, redirect
 from flask_cors import CORS, cross_origin
@@ -36,7 +37,6 @@ def post_bot():
     return json.dumps({'status':'succes'}), 200
 
 ## get del bot
-@app.route('/bot',methods=['GET'])
 def get_bot():
     conn = mysql.connect()
     cursor =conn.cursor()
@@ -44,10 +44,10 @@ def get_bot():
         cursor.execute('select * from BOT')
         lista = [{'id':campus_id,'email':email,'date':date, 'type':tipo} for (campus_id, email, date,tipo) in cursor]
         conn.close()
-        return json.dumps({'status':'succes','elementos':lista}),200
+        return lista
     except:
         conn.close()
-        return json.dumps({'status':'error'}), 505
+        return []
 
 ## post del campus
 @app.route('/campus', methods=['POST'])
@@ -81,7 +81,7 @@ def get_campus():
 @app.route('/campus/<question_number>', methods=['GET'])
 def get_campus_questions(question_number):
     campus_data = get_campus()
-    data = resolve_question(question_number, campus_data)
+    data = campus_questions.resolve_question(question_number, campus_data)
     return json.dumps({'status':'success', 'data': data})
 
 ## post del sleep
@@ -102,7 +102,6 @@ def post_sleep():
     return json.dumps({'status':'succes'}), 200
 
 ## get del sleep
-@app.route('/sleep',methods=['GET'])
 def get_sleep():
     conn = mysql.connect()
     cursor =conn.cursor()
@@ -110,10 +109,10 @@ def get_sleep():
         cursor.execute('select * from SLEEP')
         lista = [{'id':campus_id,'email':email,'date':date, 'type': tipo} for (campus_id, email, date, tipo) in cursor]
         conn.close()
-        return json.dumps({'status':'succes','elementos':lista}),200
+        return lista
     except:
         conn.close()
-        return json.dumps({'status':'error'}), 505
+        return []
 
 ## post de eventos
 @app.route('/event', methods=['POST'])
@@ -136,7 +135,6 @@ def post_eventos():
     return json.dumps({'status':'succes'}), 200
 
 ## get de eventos
-@app.route('/event',methods=['GET'])
 def get_eventos():
     conn = mysql.connect()
     cursor =conn.cursor()
@@ -144,10 +142,10 @@ def get_eventos():
         cursor.execute('select * from EVENTOS')
         lista = [{'id':campus_id,'email':email,'date':date,'start_date':start_date,'end_date':end_date, 'type': tipo, 'recomended': recomended} for (campus_id, email, start_date,end_date, tipo, recomended, date) in cursor]
         conn.close()
-        return json.dumps({'status':'succes','elementos':lista}),200
+        retrun lista
     except:
         conn.close()
-        return json.dumps({'status':'error'}), 505
+        return []
 
 ## post de interaccion
 @app.route('/interaccion', methods=['POST'])
@@ -182,4 +180,4 @@ def get_interaccion():
         return json.dumps({'status':'error'}), 505
 
 if __name__ == "__main__":
-    app.run(host='157.253.229.29', port=9000)
+    app.run(host='0.0.0.0', port=9000)
