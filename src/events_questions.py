@@ -5,9 +5,11 @@ def resolve_question(question_number, events_data):
         entry['date'] = get_datetime(entry['date'])
     return questions[question_number](events_data)
 def question1(events_data):
-    res = [0 for x in range(7)]
+    weekday_name = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    res = [[weekday_name[i],0] for i in range(7)]
     for entry in events_data:
-        res[entry['date'].weekday()] = res[entry['date'].weekday()]+1
+        day =  entry['']
+        res[day][1] +=1
     return res
 def question2(events_data):
     pass
