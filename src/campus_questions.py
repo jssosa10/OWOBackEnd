@@ -2,10 +2,6 @@ import datetime
 
 buckets = 20
 date_template = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-questions = [question1, question2, question3, question4]
-
-def get_datetime(date):
-    return datetime.datetime.strptime(date_template, date)
 
 def resolve_question(question_number, campus_data):
     for entry in campus_data:
@@ -68,3 +64,8 @@ def question4(campus_data):
         day = entry['date'].weekday()
         week_days[day] += 1
     return week_days
+
+questions = [question1, question2, question3, question4]
+
+def get_datetime(date):
+    return datetime.datetime.strptime(date_template, date)
