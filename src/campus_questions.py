@@ -43,7 +43,7 @@ def question2(campus_data):
     # count freqs
     days = [0 for _ in range(366)]
     for entry in campus_data:
-        day = date.timetuple().tm_yday - 1
+        day = entry['date'].timetuple().tm_yday - 1
         days[day] += 1
     # preffix sum
     for i in range(len(1, days)):
