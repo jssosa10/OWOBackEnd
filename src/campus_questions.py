@@ -47,13 +47,13 @@ def question1(campus_data):
 
 def question2(campus_data):
     # count freqs
-    days = [[str(i + 1), 0] for _ in range(366)]
+    days = [[str(i + 1), 0] for i in range(366)]
     for entry in campus_data:
         day = entry['date'].timetuple().tm_yday - 1
-        days[day] += 1
+        days[day][1] += 1
     # preffix sum
     for i in range(1, len(days)):
-        days[i] += days[i - 1]
+        days[i][1] += days[i - 1][1]
     return days
 
 def question3(campus_data):
@@ -62,7 +62,7 @@ def question3(campus_data):
     hours = [[get_hour(i), 0] for i in range(24)]
     for entry in campus_data:
         hour = entry['date'].hour
-        hours[hour] += 1
+        hours[hour][1] += 1
     return hours
 
 def question4(campus_data):
@@ -71,7 +71,7 @@ def question4(campus_data):
     week_days = [[weekday_name[i], 0] for i in range(7)]
     for entry in campus_data:
         day = entry['date'].weekday()
-        week_days[day] += 1
+        week_days[day][1] += 1
     return week_days
 
 questions = [question1, question2, question3, question4]
