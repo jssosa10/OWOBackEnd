@@ -8,7 +8,7 @@ def question1(events_data):
     weekday_name = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     res = [[weekday_name[i],0] for i in range(7)]
     for entry in events_data:
-        day =  entry['date'].day
+        day =  entry['date'].weekday()
         res[day][1] +=1
     return res
 def question2(events_data):
