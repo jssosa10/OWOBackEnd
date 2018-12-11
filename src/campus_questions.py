@@ -46,7 +46,7 @@ def question2(campus_data):
         day = entry['date'].timetuple().tm_yday - 1
         days[day] += 1
     # preffix sum
-    for i in range(len(1, days)):
+    for i in range(1, len(days)):
         days[i] += days[i - 1]
 
 def question3(campus_data):
