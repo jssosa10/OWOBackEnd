@@ -68,4 +68,4 @@ def question4(campus_data):
 questions = [question1, question2, question3, question4]
 
 def get_datetime(date):
-    return datetime.datetime.strptime(date_template, date)
+    return datetime.datetime.strptime(date,date_template)
