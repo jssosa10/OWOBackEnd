@@ -3,6 +3,7 @@ import json
 import ConfigParser
 import campus_questions
 import events_questions
+import bot_questions
 from flaskext.mysql import MySQL
 from flask import Flask, render_template, request, redirect
 from flask_cors import CORS, cross_origin
@@ -26,11 +27,13 @@ def post_bot():
     content = request.get_json(silent=True)
     mail = content['email']
     date = content['date']
+    #Es la accion
     type = content['type']
+    mode = content['mode']
     conn = mysql.connect()
     cursor =conn.cursor()
     try:
-        cursor.execute('insert into BOT values(null, %s, %s, %s)', (mail, date,type))
+        cursor.execute('insert into BOT values(null, %s, %s, %s, %s)', (mail, date,type, mode))
         conn.commit()
     except:
         conn.rollback()
@@ -43,12 +46,19 @@ def get_bot():
     cursor =conn.cursor()
     try:
         cursor.execute('select * from BOT')
-        lista = [{'id':campus_id,'email':email,'date':date, 'type':tipo} for (campus_id, email, date,tipo) in cursor]
+        lista = [{'id':campus_id,'email':email,'date':date, 'type':tipo, 'mode': modo} for (campus_id, email, date,tipo, modo) in cursor]
         conn.close()
         return lista
     except:
         conn.close()
         return []
+
+# question 1
+@app.route('/bot/<question_number>', methods=['GET'])
+def get_bot_questions(question_number):
+    bot_data = get_bot()
+    data = bot_questions.resolve_question(int(question_number)-1, bot_data)
+    return json.dumps({'status':'success', 'data': data})
 
 ## post del campus
 @app.route('/campus', methods=['POST'])
@@ -95,7 +105,11 @@ def post_sleep():
     conn = mysql.connect()
     cursor =conn.cursor()
     try:
-        cursor.execute('insert into SLEEP values(null, %s, %s, %s)', (mail, date,type))
+        if type=='start':
+            print 'entro'
+            cursor.execute('insert into SLEEP values(null, %s, %s, null)', (mail, date))
+        else:
+            cursor.execute('update SLEEP SET end_date=%s WHERE email = %s AND end_date is NULL',(date,mail))
         conn.commit()
     except:
         conn.rollback()
@@ -151,6 +165,7 @@ def get_eventos():
 def get_events_questions(question_number):
     events_data = get_eventos()
     data = events_questions.resolve_question(int(question_number)-1, events_data)
+    print data
     return json.dumps({'status':'success', 'data': data})
 ## post de interaccion
 @app.route('/interaccion', methods=['POST'])
