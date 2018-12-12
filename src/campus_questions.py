@@ -54,7 +54,15 @@ def question2(campus_data):
     # preffix sum
     for i in range(1, len(days)):
         days[i][1] += days[i - 1][1]
-    return days
+    # filter non change values
+    all_days = []
+    for i in range(len(days)):
+        if i == 0 or i == len(days) - 1:
+            all_days.append(days[i])
+        elif days[i][1] != days[i - 1][1]:
+            all_days.append(days[i - 1])
+            all_days.append(days[i])
+    return all_days
 
 def question3(campus_data):
     # count freqs
