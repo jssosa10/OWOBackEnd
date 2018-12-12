@@ -3,6 +3,7 @@ import json
 import ConfigParser
 import campus_questions
 import events_questions
+import bot_questions
 from flaskext.mysql import MySQL
 from flask import Flask, render_template, request, redirect
 from flask_cors import CORS, cross_origin

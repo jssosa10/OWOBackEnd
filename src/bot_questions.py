@@ -21,7 +21,7 @@ def question1(bot_data):
         else:
             group_by_type[type]=1
     # get all avg
-    time_buckets = [['', 0] for _ in len(group_by_type)]
+    time_buckets = [['', 0] for _ in range(len(group_by_type))]
     i = 0
     for key, elem in group_by_type.items():
         time_buckets[i][0] = key
@@ -40,7 +40,7 @@ def question2(bot_data):
         else:
             group_by_type[(mode+":"+type)]=1
     # get all avg
-    time_buckets = [['', 0] for _ in len(group_by_type)]
+    time_buckets = [['', 0] for _ in range(len(group_by_type))]
     i = 0
     for key, elem in group_by_type.items():
         time_buckets[i][0] = key
@@ -58,7 +58,7 @@ def question3(bot_data):
         else:
             group_by_mode['bot']=group_by_mode['bot']+1
     # get all avg
-    time_buckets = [['', 0] for _ in len(group_by_mode)]
+    time_buckets = [['', 0] for _ in range(len(group_by_mode))]
     i = 0
     for key, elem in group_by_mode.items():
         time_buckets[i][0] = key
