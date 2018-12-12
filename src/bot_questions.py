@@ -54,9 +54,9 @@ def question3(bot_data):
     for entry in bot_data:
         mode = entry['mode']
         if(mode=='manual'):
-            group_by_mode['manual']=group_by_mode['manual']+1
+            group_by_mode['manual']+=1
         else:
-            group_by_mode['bot']=group_by_mode['bot']+1
+            group_by_mode['bot']+=1
     # get all avg
     time_buckets = [['', 0] for _ in range(len(group_by_mode))]
     i = 0
@@ -64,6 +64,7 @@ def question3(bot_data):
         time_buckets[i][0] = key
         time_buckets[i][1] = elem
         i+=1
+    print time_buckets
     return time_buckets
 
 questions = [question1, question2, question3]
