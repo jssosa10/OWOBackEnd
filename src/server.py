@@ -165,6 +165,7 @@ def get_eventos():
 def get_events_questions(question_number):
     events_data = get_eventos()
     data = events_questions.resolve_question(int(question_number)-1, events_data)
+    print data
     return json.dumps({'status':'success', 'data': data})
 ## post de interaccion
 @app.route('/interaccion', methods=['POST'])
