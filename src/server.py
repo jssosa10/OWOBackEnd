@@ -26,7 +26,7 @@ def post_bot():
     content = request.get_json(silent=True)
     mail = content['email']
     date = content['date']
-    #Es la acción
+    #Es la accion
     type = content['type']
     mode = content['mode']
     conn = mysql.connect()
