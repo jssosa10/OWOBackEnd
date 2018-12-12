@@ -26,11 +26,13 @@ def post_bot():
     content = request.get_json(silent=True)
     mail = content['email']
     date = content['date']
+    #Es la acción
     type = content['type']
+    mode = content['mode']
     conn = mysql.connect()
     cursor =conn.cursor()
     try:
-        cursor.execute('insert into BOT values(null, %s, %s, %s)', (mail, date,type))
+        cursor.execute('insert into BOT values(null, %s, %s, %s, %s)', (mail, date,type, mode))
         conn.commit()
     except:
         conn.rollback()
@@ -43,12 +45,19 @@ def get_bot():
     cursor =conn.cursor()
     try:
         cursor.execute('select * from BOT')
-        lista = [{'id':campus_id,'email':email,'date':date, 'type':tipo} for (campus_id, email, date,tipo) in cursor]
+        lista = [{'id':campus_id,'email':email,'date':date, 'type':tipo, 'mode': modo} for (campus_id, email, date,tipo, modo) in cursor]
         conn.close()
         return lista
     except:
         conn.close()
         return []
+
+# question 1
+@app.route('/bot/<question_number>', methods=['GET'])
+def get_bot_questions(question_number):
+    bot_data = get_bot()
+    data = bot_questions.resolve_question(int(question_number)-1, bot_data)
+    return json.dumps({'status':'success', 'data': data})
 
 ## post del campus
 @app.route('/campus', methods=['POST'])
@@ -96,9 +105,10 @@ def post_sleep():
     cursor =conn.cursor()
     try:
         if type=='start':
+            print 'entro'
             cursor.execute('insert into SLEEP values(null, %s, %s, null)', (mail, date))
         else:
-            cursor.execute('update SLEEP set end_date="%s" where end_date is null and email="%s"',(date,mail))
+            cursor.execute('update SLEEP SET end_date=%s WHERE email = %s AND end_date is NULL',(date,mail))
         conn.commit()
     except:
         conn.rollback()
